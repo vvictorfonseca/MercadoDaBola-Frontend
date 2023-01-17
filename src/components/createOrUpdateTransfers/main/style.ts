@@ -2,13 +2,14 @@ import styled from "styled-components/native"
 
 export const Main = styled.View`
   display: flex;
-  justify-content: center;
+  //justify-content: center;
   align-items: center;
 `
 export const MainBox = styled.View`
   display: flex;
   align-items: center;
   justify-content: space-evenly;
+  margin-top: 8;
   width: 80%;
   height: 90%;
   //background-color: blue;

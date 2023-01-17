@@ -2,22 +2,22 @@ import { Main, MainBox, Box } from "./style"
 import { StackNavigationProp } from "@react-navigation/stack"
 
 import { Ionicons } from "@expo/vector-icons/"
-import { RootStackParamList } from "../../../../App";
+import { RootStackParamList } from "../../../navigations/mainNavigation";
 
 type CreateScreenNavigationProp = StackNavigationProp<
-    RootStackParamList,
-    'Create'
-  >;
+  RootStackParamList,
+  'Create'
+>;
 
 type Props = {
   navigation: CreateScreenNavigationProp
 }
 
-export default function CreateOrUpdate({ navigation }: Props ) {
+export default function CreateOrUpdate({ navigation }: Props) {
   return (
     <Main>
       <MainBox>
-        <Box 
+        <Box
           onPress={() => {
             navigation.navigate('NewTransfer')
           }}
