@@ -20,14 +20,6 @@ export default function MainNavigator() {
   return (
     <Tab.Navigator
       screenOptions={{
-        tabBarShowLabel: false,
-        headerStyle: {
-          backgroundColor: '#007300',
-        },
-        headerTintColor: '#fff',
-        headerTitleStyle: {
-          fontWeight: 'bold',
-        },
         tabBarStyle: {
           position: 'absolute',
           backgroundColor: '#007300',
@@ -39,46 +31,55 @@ export default function MainNavigator() {
           paddingTop: 8,
           borderRadius: 15
         },
+        headerStyle: {
+          backgroundColor: '#007300',
+        },
+        headerTitleStyle: {
+          fontWeight: 'bold',
+        },
+        headerTintColor: '#fff',
         tabBarActiveTintColor: '#fff',
-        tabBarInactiveTintColor: '#dfdfdf'
+        tabBarInactiveTintColor: '#dfdfdf',
+        tabBarShowLabel: false,
+        tabBarHideOnKeyboard: true
       }}
       initialRouteName="Transfers"
     >
-      
+
       <Tab.Screen
         name="Transfers"
         component={Transfers}
-        options={{ 
-          title: "Create", 
-          headerTitle: "Criar ou atualizar transferência", 
+        options={{
+          title: "Create",
+          headerTitle: "Criar ou atualizar transferência",
           headerShadowVisible: false,
           tabBarLabel: "Create/Update",
           tabBarIcon: ({ focused }) => (
-            <View style={{alignItems: 'center', justifyContent: 'center'}}>
-              <Ionicons name='checkmark-circle' color={"#fff"} style={{opacity: focused? 1 : 0.8}} size={35} />
-              <Text style={{color: "#fff", fontWeight: 'bold', opacity: focused? 1 : 0.8}}> Transfers</Text>
+            <View style={{ alignItems: 'center', justifyContent: 'center' }}>
+              <Ionicons name='checkmark-circle' color={"#fff"} style={{ opacity: focused ? 1 : 0.8 }} size={35} />
+              <Text style={{ color: "#fff", fontWeight: 'bold', opacity: focused ? 1 : 0.8 }}> Transfers</Text>
             </View>
           )
         }}
       />
-      
+
       <Tab.Screen
         name="Create"
         component={CreateOrUpdateNavigator}
-        options={{ 
-          title: "Create", 
-          headerTitle: "Criar ou atualizar transferência", 
+        options={{
+          title: "Create",
+          headerTitle: "Criar ou atualizar transferência",
           headerShadowVisible: false,
           tabBarLabel: "Create/Update",
           tabBarIcon: ({ focused }) => (
-            <View style={{alignItems: 'center', justifyContent: 'center'}}>
-              <Ionicons name="create" color={"#fff"} style={{opacity: focused? 1 : 0.8}} size={35} />
-              <Text style={{color: "#fff", opacity: focused? 1 : 0.8, fontWeight: 'bold'}}>Create</Text>
+            <View style={{ alignItems: 'center', justifyContent: 'center' }}>
+              <Ionicons name="create" color={"#fff"} style={{ opacity: focused ? 1 : 0.8 }} size={35} />
+              <Text style={{ color: "#fff", opacity: focused ? 1 : 0.8, fontWeight: 'bold' }}>Create</Text>
             </View>
           )
         }}
       />
-    
+
     </Tab.Navigator>
   )
 }

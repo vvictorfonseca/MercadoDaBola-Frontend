@@ -14,7 +14,7 @@ export default function CreateOrUpdateNavigator() {
       screenOptions={{
         headerStyle: {
           backgroundColor: "#007300"
-        }
+        },
       }}
 
     >
