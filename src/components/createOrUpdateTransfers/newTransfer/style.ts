@@ -14,7 +14,7 @@ export const Box = styled.View`
 export const Description = styled.Text`
   font-size: 25px;
   color: #fff;
-  font-weight: 500
+  font-weight: 500;
 `
 export const Input = styled.TextInput`
   width: 95%;
