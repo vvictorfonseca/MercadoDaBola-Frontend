@@ -1,8 +1,11 @@
 import { Main, MainBox, Box } from "./style"
 import { StackNavigationProp } from "@react-navigation/stack"
 
+import axios from "axios";
+
 import { Ionicons } from "@expo/vector-icons/"
 import { RootStackParamList } from "../../../navigations/mainNavigation";
+import { useEffect } from "react";
 
 type CreateScreenNavigationProp = StackNavigationProp<
   RootStackParamList,

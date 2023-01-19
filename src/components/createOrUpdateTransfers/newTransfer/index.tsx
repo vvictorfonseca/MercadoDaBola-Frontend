@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react";
 import { Keyboard } from "react-native";
-import Constants from 'expo-constants';
 
 import axios from "axios";
 
@@ -21,13 +20,13 @@ export default function NewTransfer() {
 
   function getPlayerInitals() {
     console.log("entrou na function")
-    const { manifest } = Constants
-    let URL = `http:${manifest?.debuggerHost?.split(`:`).shift()?.concat(`:5000`)}/get/players/ge`
+    let URL = "http://add8-2804-14d-5083-8bca-c92-7012-e03e-3546.ngrok.io/get/players/ge"
     
     const promise = axios.get(URL)
     promise.then(response => {
       console.log("entrou no then")
       const { data } = response
+      console.log(data)
       setPlayers(data)
     })
     .catch(error => {
