@@ -1,5 +1,5 @@
-import { useEffect, useState } from "react";
-import { Keyboard } from "react-native";
+import { useState } from "react";
+import { Keyboard, FlatList, ListRenderItemInfo } from "react-native";
 
 import axios from "axios";
 
@@ -9,36 +9,52 @@ import { Box, Description, Input } from "./style";
 import { IPlayer } from "../../../interfaces/IPlayers";
 import { INewTransfer } from "../../../interfaces/ITransfers";
 
+import Player from "./player";
+
 export default function NewTransfer() {
   const [transferData, setTransferData] = useState<INewTransfer>()
   const [players, setPlayers] = useState<IPlayer[]>()
+  console.log(players)
   const [playerName, setPlayerName] = useState<string>("")
 
-  useEffect(() => {
-    getPlayerInitals()
-  }, [playerName])
+  function getPlayerInitals(playerName: string) {
+    let URL = `http://4738-2804-14d-2a21-92c7-ad8f-2d4e-359e-415a.ngrok.io/get/players/${playerName}`
 
-  function getPlayerInitals() {
-    console.log("entrou na function")
-    let URL = "http://add8-2804-14d-5083-8bca-c92-7012-e03e-3546.ngrok.io/get/players/ge"
-    
     const promise = axios.get(URL)
     promise.then(response => {
-      console.log("entrou no then")
       const { data } = response
-      console.log(data)
       setPlayers(data)
     })
-    .catch(error => {
-      console.log("entrou")
-    })
+      .catch(error => {
+        console.log(error)
+      })
+  }
+
+  function playerValue(playerName: string) {
+    console.log("na função", playerName)
+    setPlayerName(playerName)
+    getPlayerInitals(playerName)
+  }
+
+  function renderPlayer({ item }: ListRenderItemInfo<IPlayer>) {
+    return <Player {...item} />
   }
 
   return (
     <Main onPress={Keyboard.dismiss}>
       <Box>
         <Description>Digite o nome do jogador</Description>
-        <Input placeholder="Nome" maxLength={20} value={playerName} onChangeText={setPlayerName} />
+        <Input placeholder="Nome" maxLength={20} value={playerName} onChangeText={playerValue} />
+        {
+          players?.length !== undefined ? (
+            <FlatList
+              data={players}
+              renderItem={renderPlayer}
+            />
+          ) : (
+            null
+          )
+        }
       </Box>
     </Main>
   )
