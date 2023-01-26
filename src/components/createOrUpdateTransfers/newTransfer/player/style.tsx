@@ -1,8 +1,11 @@
 import styled from "styled-components/native";
 
 export const Box = styled.View`
-  height: 40px;
-  background-color: red;
+  display: flex;
+  justify-content: center;
+  width: 313px;
+  height: 50px;
+  background-color: #56bc31;
 `
 export const Avatar = styled.Image`
   width: 30px;
@@ -10,5 +13,7 @@ export const Avatar = styled.Image`
   border-radius: 50%;
 `
 export const Name = styled.Text`
-  font-size: 16px;
+  font-size: 20px;
+  color: #fff;
+  font-weight: 500;
 `

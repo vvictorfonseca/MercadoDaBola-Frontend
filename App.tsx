@@ -11,5 +11,5 @@ export default function App() {
       <StatusBar backgroundColor={'#007300'} barStyle='light-content' />
       <MainNavigator />
     </NavigationContainer>
-  );
+  )
 }

@@ -1,10 +1,10 @@
 import { useState } from "react";
-import { Keyboard, FlatList, ListRenderItemInfo } from "react-native";
+import { Keyboard, ListRenderItemInfo, FlatList } from "react-native";
 
 import axios from "axios";
 
 import { Main } from "../main/style";
-import { Box, Description, Input } from "./style";
+import { Box, Description, Input, styles } from "./style";
 
 import { IPlayer } from "../../../interfaces/IPlayers";
 import { INewTransfer } from "../../../interfaces/ITransfers";
@@ -13,12 +13,12 @@ import Player from "./player";
 
 export default function NewTransfer() {
   const [transferData, setTransferData] = useState<INewTransfer>()
-  const [players, setPlayers] = useState<IPlayer[]>()
-  console.log(players)
+  const [players, setPlayers] = useState<IPlayer[]>([])
   const [playerName, setPlayerName] = useState<string>("")
 
   function getPlayerInitals(playerName: string) {
-    let URL = `http://4738-2804-14d-2a21-92c7-ad8f-2d4e-359e-415a.ngrok.io/get/players/${playerName}`
+    playerName == "" ? setPlayers([]) : null
+    let URL = `https://486b-2804-14d-2a21-92c7-45e-6bb3-fe2e-9.sa.ngrok.io/get/players/${playerName}`
 
     const promise = axios.get(URL)
     promise.then(response => {
@@ -30,8 +30,7 @@ export default function NewTransfer() {
       })
   }
 
-  function playerValue(playerName: string) {
-    console.log("na função", playerName)
+  function onChangeFunction(playerName: string) {
     setPlayerName(playerName)
     getPlayerInitals(playerName)
   }
@@ -42,20 +41,18 @@ export default function NewTransfer() {
 
   return (
     <Main onPress={Keyboard.dismiss}>
+      <>
       <Box>
         <Description>Digite o nome do jogador</Description>
-        <Input placeholder="Nome" maxLength={20} value={playerName} onChangeText={playerValue} />
-        {
-          players?.length !== undefined ? (
-            <FlatList
-              data={players}
-              renderItem={renderPlayer}
-            />
-          ) : (
-            null
-          )
-        }
+        <Input placeholder="Nome" maxLength={20} value={playerName} onChangeText={onChangeFunction} />
       </Box>
+      <FlatList
+          contentContainerStyle={styles.FlatList}
+          data={players}
+          renderItem={renderPlayer}
+          //keyExtractor={(item) => `${item.id}`}
+        />
+      </>
     </Main>
   )
 }
