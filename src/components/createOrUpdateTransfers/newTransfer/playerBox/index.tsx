@@ -7,16 +7,19 @@ import PlayersContext, { IPlayerContext } from '../../../../contexts/playersCont
 
 import { IPlayer } from "../../../../interfaces/IPlayers"
 
+import NewTransferContext, {INewTransferContext} from '../../../../contexts/newTransferContext'
+
 export default function PlayerBox(props: IPlayer) {
   const { players } = useContext<IPlayerContext>(PlayersContext)
-  let lastPlayerId: number | null = null;
+  const { transferData, setTransferData } = useContext<INewTransferContext>(NewTransferContext)
   
+  let lastPlayerId: number | null = null;
   players.forEach(item => {
     lastPlayerId = item.id
   })
 
   return (
-    <Box style={props.id == lastPlayerId ? {borderBottomLeftRadius: 15, borderBottomRightRadius: 15} : null}>
+    <Box onPress={() => setTransferData({...transferData, playerId: props.id})} style={props.id == lastPlayerId ? {borderBottomLeftRadius: 15, borderBottomRightRadius: 15} : null}>
       <Image style={Styles.Image} source={{uri: props.photo}} />
       <Name>{props.name}</Name>
     </Box>

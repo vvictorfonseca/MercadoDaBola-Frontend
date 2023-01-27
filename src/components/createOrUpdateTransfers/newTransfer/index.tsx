@@ -1,32 +1,25 @@
-import { useContext, useState } from "react";
-import { Keyboard, ListRenderItemInfo, FlatList } from "react-native";
-
-import axios from "axios";
+import { useState, useContext } from "react";
+import { Keyboard, Text } from "react-native";
 
 import { Main } from "../main/style";
-import { Box, Description, Input, styles } from "./style";
 
-import { IPlayer } from "../../../interfaces/IPlayers";
 import { INewTransfer } from "../../../interfaces/ITransfers";
-
 import { transferDataObject } from "../../../initalValues";
 
-import PlayersContext, { IPlayerContext } from "../../../contexts/playersContext";
-
-import Player from "./player";
-import Separator from "../../separator";
-import NewPlayerComponent from "./newPlayerComponent";
+import NewTransferContext, { INewTransferContext } from "../../../contexts/newTransferContext";
 
 import SetPlayer from "./setPlayer";
 
 export default function NewTransfer() {
-  const [transferData, setTransferData] = useState<INewTransfer>(transferDataObject)
-  
+  const { transferData, setTransferData } = useContext<INewTransferContext>(NewTransferContext)
+  console.log(transferData)
   return (
     <Main onPress={Keyboard.dismiss}>
       {
         transferData.playerId == null ? (
           <SetPlayer />
+        ) : transferData.from == null ? (
+          <Text>Opa, foi</Text>
         ) : (
           null
         )

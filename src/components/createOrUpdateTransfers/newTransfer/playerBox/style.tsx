@@ -1,17 +1,13 @@
 import styled from "styled-components/native";
 import { StyleSheet } from "react-native";
 
-export const Box = styled.View`
+export const Box = styled.TouchableOpacity`
   display: flex;
   flex-direction: row;
   align-items: center;
   width: 313px;
   height: 60px;
   background-color: #56bc31;
-
-  &:nth-child(1) {
-    background-color: red;
-  }
 `
 export const Name = styled.Text`
   font-size: 20px;
