@@ -5,11 +5,15 @@ import { NavigationContainer } from '@react-navigation/native';
 
 import MainNavigator from './src/navigations/mainNavigation';
 
+import { PlayersProvider } from './src/contexts/playersContext';
+
 export default function App() {
   return (
     <NavigationContainer>
-      <StatusBar backgroundColor={'#007300'} barStyle='light-content' />
-      <MainNavigator />
+      <PlayersProvider>
+        <StatusBar backgroundColor={'#007300'} barStyle='light-content' />
+        <MainNavigator />
+      </PlayersProvider>
     </NavigationContainer>
   )
 }

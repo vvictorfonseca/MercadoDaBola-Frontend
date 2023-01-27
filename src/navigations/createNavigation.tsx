@@ -28,7 +28,7 @@ export default function CreateOrUpdateNavigator() {
         component={NewTransfer}
         options={{ title: "", headerTintColor: "#fff" }}
       />
-      <Stack.Screen 
+      <Stack.Screen
         name="UpdateTransfer"
         component={UpdateTransfer}
         options={{ title: "", headerTintColor: "#fff" }}
