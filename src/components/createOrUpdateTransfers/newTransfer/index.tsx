@@ -1,17 +1,15 @@
-import { useState, useContext } from "react";
+import { useContext } from "react";
 import { Keyboard, Text } from "react-native";
 
 import { Main } from "../main/style";
 
-import { INewTransfer } from "../../../interfaces/ITransfers";
-import { transferDataObject } from "../../../initalValues";
-
 import NewTransferContext, { INewTransferContext } from "../../../contexts/newTransferContext";
 
 import SetPlayer from "./setPlayer";
+import SetClub from "./setClub";
 
 export default function NewTransfer() {
-  const { transferData, setTransferData } = useContext<INewTransferContext>(NewTransferContext)
+  const { transferData } = useContext<INewTransferContext>(NewTransferContext)
   console.log(transferData)
   return (
     <Main onPress={Keyboard.dismiss}>
@@ -19,7 +17,9 @@ export default function NewTransfer() {
         transferData.playerId == null ? (
           <SetPlayer />
         ) : transferData.from == null ? (
-          <Text>Opa, foi</Text>
+          <SetClub />
+        ) : transferData.to == null ? (
+          <Text>Deu bom Paizão</Text>
         ) : (
           null
         )

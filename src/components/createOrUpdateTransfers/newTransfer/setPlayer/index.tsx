@@ -6,9 +6,9 @@ import { Box, Description, Input, styles } from "../style"
 
 import { IPlayer } from '../../../../interfaces/IPlayers'
 
-import PlayerBox from '../playerBox'
+import PlayerAndClubBox from '../PlayerAndClubBox'
 import Separator from '../../../separator'
-import NewPlayerComponent from '../newPlayerComponent'
+import CreatePlayerOrClub from '../CreatePlayerOrClub'
 
 import PlayersContext, { IPlayerContext } from '../../../../contexts/playersContext'
 
@@ -36,7 +36,7 @@ export default function SetPlayer() {
   }
 
   function renderPlayer({ item }: ListRenderItemInfo<IPlayer>) {
-    return <PlayerBox {...item} />
+    return <PlayerAndClubBox {...item} />
   }
 
   return (
@@ -45,9 +45,10 @@ export default function SetPlayer() {
         <Description>Digite o nome do jogador</Description>
         <Input placeholder="Nome" maxLength={20} value={playerName} onChangeText={onChangeFunction} />
       </Box>
+      
       {
         playerName !== "" && players.length == 0 ? (
-          <NewPlayerComponent />
+          <CreatePlayerOrClub />
         ) : (
           <FlatList
             contentContainerStyle={styles.FlatList}
