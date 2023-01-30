@@ -5,15 +5,21 @@ import { Main } from "../main/style";
 
 import NewTransferContext, { INewTransferContext } from "../../../contexts/newTransferContext";
 
-import SetPlayer from "./setPlayer";
-//import SetClub from "./setClub";
+import SetNewTransfer from "./SetNewTransfer";
+import ConfirmTransfer from "./ConfirmTransfer";
 
 export default function NewTransfer() {
   const { transferData } = useContext<INewTransferContext>(NewTransferContext)
-  console.log(transferData)
+  
   return (
     <Main onPress={Keyboard.dismiss}>
-      <SetPlayer />
+      {
+        transferData.status == null ? (
+          <SetNewTransfer />
+        ) : (
+          <ConfirmTransfer />
+        )
+      }
     </Main>
   )
 }

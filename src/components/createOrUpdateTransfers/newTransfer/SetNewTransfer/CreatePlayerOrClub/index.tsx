@@ -2,7 +2,7 @@ import { Box, Name } from "../PlayerAndClubBox/style"
 
 import { Ionicons } from "@expo/vector-icons"
 
-import NewTransferContext, {INewTransferContext} from "../../../../contexts/newTransferContext"
+import NewTransferContext, {INewTransferContext} from "../../../../../contexts/newTransferContext"
 import { useContext } from "react"
 
 export default function CreatePlayerOrClub() {
