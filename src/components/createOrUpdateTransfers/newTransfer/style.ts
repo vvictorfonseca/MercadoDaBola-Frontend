@@ -18,6 +18,7 @@ export const Description = styled.Text`
   font-size: 25px;
   color: #fff;
   font-weight: 500;
+  text-align: center;
   margin: 15px 0;
 `
 export const Input = styled.TextInput`

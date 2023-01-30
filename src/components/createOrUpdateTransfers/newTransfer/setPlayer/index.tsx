@@ -10,50 +10,62 @@ import PlayerAndClubBox from '../PlayerAndClubBox'
 import Separator from '../../../separator'
 import CreatePlayerOrClub from '../CreatePlayerOrClub'
 
+import NewTransferContext, { INewTransferContext } from '../../../../contexts/newTransferContext'
 import PlayersContext, { IPlayerContext } from '../../../../contexts/playersContext'
+import ClubsContext, { IClubsContext } from '../../../../contexts/clubsContext'
 
 export default function SetPlayer() {
-  const [playerName, setPlayerName] = useState<string>("")
+  const [inputValue, setInputValue] = useState<string>("")
+  const { transferData } = useContext<INewTransferContext>(NewTransferContext)
   const { players, setPlayers } = useContext<IPlayerContext>(PlayersContext)
+  console.log(players)
+  const { clubs, setClubs } = useContext<IClubsContext>(ClubsContext)
 
-  function getPlayerInitals(playerName: string) {
-    playerName == "" ? setPlayers([]) : null
-    let URL = `https://135f-2804-14d-2a21-92c7-45e-6bb3-fe2e-9.sa.ngrok.io/get/players/${playerName}`
+  function getPlayerInitals(inputValue: string) {
+    inputValue == "" && transferData.playerId == null ? setPlayers([]) : inputValue == "" && transferData.from == null || transferData.to == null ? setClubs([]) : null
+
+    let URL: string = "";
+
+    if (transferData.playerId == null) {
+      URL = `https://2da3-179-66-249-119.sa.ngrok.io/get/players/${inputValue}`
+    } else if (transferData.from == null || transferData.to == null) {
+      URL = `https://2da3-179-66-249-119.sa.ngrok.io/get/clubs/${inputValue}`
+    }
 
     const promise = axios.get(URL)
     promise.then(response => {
       const { data } = response
-      setPlayers(data)
+      transferData.playerId == null ? setPlayers(data) : setClubs(data)
     })
       .catch(error => {
         console.log(error)
       })
   }
 
-  function onChangeFunction(playerName: string) {
-    setPlayerName(playerName)
-    getPlayerInitals(playerName)
+  function onChangeFunction(inputValue: string) {
+    setInputValue(inputValue)
+    getPlayerInitals(inputValue)
   }
 
   function renderPlayer({ item }: ListRenderItemInfo<IPlayer>) {
-    return <PlayerAndClubBox {...item} />
+    return <PlayerAndClubBox info={item} inputValue={setInputValue} setClubs={setClubs} />
   }
 
   return (
     <>
-      <Box style={players.length == 0 && playerName == "" ? { borderBottomLeftRadius: 15, borderBottomRightRadius: 15 } : null}>
-        <Description>Digite o nome do jogador</Description>
-        <Input placeholder="Nome" maxLength={20} value={playerName} onChangeText={onChangeFunction} />
+      <Box style={players.length == 0 && inputValue == "" || clubs.length == 0 && inputValue == "" ? { borderBottomLeftRadius: 15, borderBottomRightRadius: 15 } : null}>
+        <Description>{transferData.playerId == null ? "Digite o nome do Jogador" : transferData.from == null ? "Digite o nome do Clube atual do Jogador" : transferData.to == null ? "Digite o nome do Clube interessado no Jogador" : "Digite o status da transferência"}</Description>
+        <Input placeholder="Nome" maxLength={20} value={inputValue} onChangeText={onChangeFunction} />
       </Box>
-      
+
       {
-        playerName !== "" && players.length == 0 ? (
+        transferData.playerId == null && inputValue !== "" && players.length == 0 || transferData.playerId !== null && transferData.from == null && inputValue !== "" && clubs.length == 0 ? (
           <CreatePlayerOrClub />
         ) : (
           <FlatList
             contentContainerStyle={styles.FlatList}
             ItemSeparatorComponent={Separator}
-            data={players}
+            data={transferData.playerId == null ? players : clubs}
             renderItem={renderPlayer}
             keyExtractor={(item) => `${item.id}`}
           />
