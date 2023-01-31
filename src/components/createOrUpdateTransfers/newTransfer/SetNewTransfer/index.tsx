@@ -41,9 +41,9 @@ export default function SetNewTransfer() {
     let URL: string = "";
 
     if (transferData.playerId == null) {
-      URL = `https://2da3-179-66-249-119.sa.ngrok.io/get/players/${inputValue}`
+      URL = `https://37fe-2804-d41-a777-8f00-d438-2f46-e052-58b3.sa.ngrok.io/get/players/${inputValue}`
     } else if (transferData.from == null || transferData.to == null) {
-      URL = `https://2da3-179-66-249-119.sa.ngrok.io/get/clubs/${inputValue}`
+      URL = `https://37fe-2804-d41-a777-8f00-d438-2f46-e052-58b3.sa.ngrok.io/get/clubs/${inputValue}`
     }
 
     const promise = axios.get(URL)

@@ -6,9 +6,7 @@ export const Box = styled.View`
   justify-content: space-evenly;
   align-items: center;
   width: 80%;
-  //height: 120px;
   margin-top: 25px;
-  //border-radius: 15px;
   border-top-right-radius: 15px;
   border-top-left-radius: 15px;
   background-color: #56bc31;
@@ -34,6 +32,5 @@ export const styles = StyleSheet.create({
   FlatList: {
     width: '100%',
     justifyContent: 'space-between',
-    //backgroundColor: '#000'
   }
 })
