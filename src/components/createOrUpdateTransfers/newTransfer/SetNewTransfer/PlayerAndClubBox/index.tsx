@@ -14,7 +14,8 @@ import ClubsContext, { IClubsContext } from '../../../../../contexts/clubsContex
 interface IProps {
   info: IPlayer,
   inputValue: (newState: string) => void,
-  setClubs: (newState: IClub[]) => void
+  setClubs: (newState: IClub[]) => void,
+  setPlayers: (newState: IPlayer[]) => void
 }
 
 export default function PlayerAndClubBox(props: IProps) {
@@ -35,7 +36,8 @@ export default function PlayerAndClubBox(props: IProps) {
   return (
     <Box onPress={() => {
       props.inputValue("")
-      transferData.playerId !== null ? props.setClubs([]) : null
+      props.setPlayers([])
+      props.setClubs([])
 
       transferData.playerId == null ?
         setTransferData({ ...transferData, playerId: props.info.id })

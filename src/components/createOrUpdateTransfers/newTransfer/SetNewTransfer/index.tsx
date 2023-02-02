@@ -12,6 +12,7 @@ import Separator from '../../../separator'
 import CreatePlayerOrClub from './CreatePlayerOrClub'
 import PlayerAndClubBox from './PlayerAndClubBox'
 import StatusBox from './StatusBox'
+import LoadingBox from './LoadingBox'
 
 import NewTransferContext, { INewTransferContext } from '../../../../contexts/newTransferContext'
 import PlayersContext, { IPlayerContext } from '../../../../contexts/playersContext'
@@ -23,6 +24,8 @@ export default function SetNewTransfer() {
   const { players, setPlayers } = useContext<IPlayerContext>(PlayersContext)
   const { clubs, setClubs } = useContext<IClubsContext>(ClubsContext)
 
+  const [loading, setLoading] = useState<boolean>(false)
+
   const status: IStatusData[] = [
     { name: "Negociando" },
     { name: "Melou" },
@@ -30,6 +33,7 @@ export default function SetNewTransfer() {
   ]
 
   function getPlayerInitals(inputValue: string) {
+    inputValue == "" ? setLoading(false) : setLoading(true)
     inputValue == "" && transferData.playerId == null ?
       setPlayers([])
       :
@@ -50,6 +54,7 @@ export default function SetNewTransfer() {
     promise.then(response => {
       const { data } = response
       transferData.playerId == null ? setPlayers(data) : setClubs(data)
+      setLoading(false)
     })
       .catch(error => {
         console.log(error)
@@ -62,7 +67,7 @@ export default function SetNewTransfer() {
   }
 
   function renderPlayersOrClubs({ item }: ListRenderItemInfo<IPlayer | IClub>) {
-    return <PlayerAndClubBox info={item} inputValue={setInputValue} setClubs={setClubs} />
+    return <PlayerAndClubBox info={item} inputValue={setInputValue} setClubs={setClubs} setPlayers={setPlayers} />
   }
 
   function renderStatus({ item }: ListRenderItemInfo<IStatusData>) {
@@ -79,16 +84,20 @@ export default function SetNewTransfer() {
               <Input placeholder="Nome" maxLength={20} value={inputValue} onChangeText={onChangeFunction} />
             </Box>
             {
-              transferData.playerId == null && inputValue !== "" && players.length == 0 || transferData.playerId !== null && transferData.from == null && inputValue !== "" && clubs.length == 0 ? (
-                <CreatePlayerOrClub />
+              loading ? (
+                <LoadingBox />
               ) : (
-                <FlatList
-                  contentContainerStyle={styles.FlatList}
-                  ItemSeparatorComponent={Separator}
-                  data={transferData.playerId == null ? players : clubs}
-                  renderItem={renderPlayersOrClubs}
-                  keyExtractor={(item) => `${item.id}`}
-                />
+                transferData.playerId == null && inputValue !== "" && players.length == 0 || transferData.playerId !== null && transferData.from == null && inputValue !== "" && clubs.length == 0 ? (
+                  <CreatePlayerOrClub />
+                ) : (
+                  <FlatList
+                    contentContainerStyle={styles.FlatList}
+                    ItemSeparatorComponent={Separator}
+                    data={transferData.playerId == null ? players : clubs}
+                    renderItem={renderPlayersOrClubs}
+                    keyExtractor={(item) => `${item.id}`}
+                  />
+                )
               )
             }
           </>

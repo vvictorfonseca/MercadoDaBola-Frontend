@@ -11,9 +11,9 @@ export default function StatusBox(props: IStatusData) {
     <Box onPress={() => {
       setTransferData({...transferData, status: props.name})
     }} 
-      style={props.name == "Fechado" ? {borderBottomLeftRadius: 15, borderBottomRightRadius: 15} : null}
+      style={props.name == "Fechado" ? {display: 'flex', justifyContent: 'center', alignItems: 'center', borderBottomLeftRadius: 15, borderBottomRightRadius: 15} : {display: 'flex', justifyContent: 'center', alignItems: 'center'}}
     >
-      <Name>{props.name}</Name>
+      <Name style={{fontWeight: 'bold'}}>{props.name}</Name>
     </Box>
   )
 }
