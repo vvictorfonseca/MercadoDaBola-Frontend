@@ -1,5 +1,5 @@
 import { INewTransfer } from "../interfaces/ITransfers"
-import { IPlayer, IPlayerFull } from "../interfaces/IPlayers"
+import { IPlayer, IPlayerCreate, IPlayerFull } from "../interfaces/IPlayers"
 import { IClub } from "../interfaces/IClubs"
 
 export let transferDataObject: INewTransfer = {
@@ -11,6 +11,14 @@ export let transferDataObject: INewTransfer = {
 
 export let initalPlayerValue: IPlayerFull = {
   id: null,
+  name: "",
+  photo: "",
+  position: "",
+  age: null,
+  nationality: ""
+}
+
+export let initalCreatePlayerValue: IPlayerCreate = {
   name: "",
   photo: "",
   position: "",

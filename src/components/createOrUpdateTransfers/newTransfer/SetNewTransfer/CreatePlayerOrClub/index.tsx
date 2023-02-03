@@ -26,7 +26,7 @@ export default function CreatePlayerOrClub({ navigation }: Props) {
   }
   return (
     <Box style={{borderBottomLeftRadius: 15, borderBottomRightRadius: 15}} onPress={() => {
-      transferData.playerId == null ? navigation.navigate('CreatePlayer') :  navigation.navigate('CreateClub')
+      transferData.playerId == null ? navigation.navigate('CreatePlayer') : navigation.navigate('CreateClub')
     }}>
       <Name style={{marginLeft: 16}}>{ setName() }</Name>
       <Ionicons name='add-circle-outline' style={{ marginLeft: 127 }}  color={"#fff"} size={35}/>

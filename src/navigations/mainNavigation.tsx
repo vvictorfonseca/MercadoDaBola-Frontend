@@ -54,7 +54,7 @@ export default function MainNavigator() {
         component={Transfers}
         options={{
           title: "Create",
-          headerTitle: "Criar ou atualizar transferência",
+          headerTitle: "Transferências",
           headerShadowVisible: false,
           tabBarLabel: "Create/Update",
           tabBarIcon: ({ focused }) => (

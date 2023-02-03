@@ -1,12 +1,10 @@
 import styled from "styled-components/native";
+import { StyleSheet } from "react-native";
 
-export const Box = styled.View`
-  display: flex;
-  align-items: center;
+export const Box = styled.ScrollView`
   margin: 15px auto;
-  justify-content: space-evenly;
   width: 80%;
-  height: 400px;
+  max-height: 65%;
   background-color: #56bc31;
   border-radius: 15px;
 `
@@ -28,3 +26,14 @@ export const Input = styled.TextInput`
   padding-left: 10px;
   background-color: #fff;
 `
+export const StatusBox = styled.FlatList`
+  width: 100%
+`
+export const styles = StyleSheet.create({
+  FlatList: {
+    width: '100%',
+    justifyContent: 'space-between',
+    borderRadius: 5
+    //justifyContent: 'space-between',
+  }
+})

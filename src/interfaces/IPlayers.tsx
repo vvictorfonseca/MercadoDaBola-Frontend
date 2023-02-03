@@ -15,8 +15,13 @@ export interface IPlayerFull {
 
 export interface IPlayerCreate {
   name: string | null;
-  photo: any;
+  photo: string | null;
   position: string | null;
   age: number | null;
   nationality: string | null;
+}
+
+export interface IPositionData {
+  id: number
+  position: string
 }
