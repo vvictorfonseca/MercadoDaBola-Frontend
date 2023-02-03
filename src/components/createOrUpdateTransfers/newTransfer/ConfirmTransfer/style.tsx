@@ -119,7 +119,6 @@ export const PlayerNameBox = styled.View`
   height: 40px;
   border-bottom-width: 1px;
   border-bottom-color:  #fff;
-  //background-color: red;
 `
 export const PlayerInfo = styled.Text`
   color: #fff;

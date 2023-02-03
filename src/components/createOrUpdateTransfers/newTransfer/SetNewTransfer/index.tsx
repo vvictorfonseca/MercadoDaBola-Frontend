@@ -2,6 +2,10 @@ import { useContext, useState } from 'react'
 import { FlatList, ListRenderItemInfo } from 'react-native'
 import axios from 'axios'
 
+import { StackNavigationProp } from '@react-navigation/stack'
+
+import { RootStackParamList } from '../../../../navigations/mainNavigation'
+
 import { Box, Description, Input, styles } from "../style"
 
 import { IPlayer } from '../../../../interfaces/IPlayers'
@@ -18,11 +22,19 @@ import NewTransferContext, { INewTransferContext } from '../../../../contexts/ne
 import PlayersContext, { IPlayerContext } from '../../../../contexts/playersContext'
 import ClubsContext, { IClubsContext } from '../../../../contexts/clubsContext'
 
-export default function SetNewTransfer() {
+type CreateScreenNavigationProp = StackNavigationProp<RootStackParamList, 'NewTransfer'>;
+
+type Props = {
+  navigation: CreateScreenNavigationProp
+}
+
+export default function SetNewTransfer({ navigation }: Props) {
   const [inputValue, setInputValue] = useState<string>("")
   const { transferData } = useContext<INewTransferContext>(NewTransferContext)
   const { players, setPlayers } = useContext<IPlayerContext>(PlayersContext)
   const { clubs, setClubs } = useContext<IClubsContext>(ClubsContext)
+  console.log(transferData)
+  console.log(players.length)
 
   const [loading, setLoading] = useState<boolean>(false)
 
@@ -45,9 +57,9 @@ export default function SetNewTransfer() {
     let URL: string = "";
 
     if (transferData.playerId == null) {
-      URL = `https://37fe-2804-d41-a777-8f00-d438-2f46-e052-58b3.sa.ngrok.io/get/players/${inputValue}`
+      URL = `https://a348-2804-d41-a777-8f00-c4c6-ef6-f16f-d26.sa.ngrok.io/get/players/${inputValue}`
     } else if (transferData.from == null || transferData.to == null) {
-      URL = `https://37fe-2804-d41-a777-8f00-d438-2f46-e052-58b3.sa.ngrok.io/get/clubs/${inputValue}`
+      URL = `https://a348-2804-d41-a777-8f00-c4c6-ef6-f16f-d26.sa.ngrok.io/get/clubs/${inputValue}`
     }
 
     const promise = axios.get(URL)
@@ -87,8 +99,8 @@ export default function SetNewTransfer() {
               loading ? (
                 <LoadingBox />
               ) : (
-                transferData.playerId == null && inputValue !== "" && players.length == 0 || transferData.playerId !== null && transferData.from == null && inputValue !== "" && clubs.length == 0 ? (
-                  <CreatePlayerOrClub />
+                transferData.playerId == null && inputValue !== "" && players.length == 0 || transferData.playerId !== null && transferData.from == null && inputValue !== "" && clubs.length == 0 || transferData.playerId !== null && transferData.from !== null && transferData.to == null && inputValue !== "" && clubs.length == 0   ? (
+                  <CreatePlayerOrClub navigation={navigation} />
                 ) : (
                   <FlatList
                     contentContainerStyle={styles.FlatList}

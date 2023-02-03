@@ -10,7 +10,10 @@ export type RootStackParamList = {
   Transfers: undefined,
   Create: undefined;
   CreateHome: undefined,
-  NewTransfer: undefined
+  NewTransferAndCreate: undefined,
+  NewTransfer: undefined,
+  CreatePlayer: undefined,
+  CreateClub: undefined,
   UpdateTransfer: undefined
 };
 
