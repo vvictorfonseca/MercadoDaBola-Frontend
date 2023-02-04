@@ -33,8 +33,6 @@ export default function SetNewTransfer({ navigation }: Props) {
   const { transferData } = useContext<INewTransferContext>(NewTransferContext)
   const { players, setPlayers } = useContext<IPlayerContext>(PlayersContext)
   const { clubs, setClubs } = useContext<IClubsContext>(ClubsContext)
-  console.log(transferData)
-  console.log(players.length)
 
   const [loading, setLoading] = useState<boolean>(false)
 
@@ -99,8 +97,8 @@ export default function SetNewTransfer({ navigation }: Props) {
               loading ? (
                 <LoadingBox />
               ) : (
-                transferData.playerId == null && inputValue !== "" && players.length == 0 || transferData.playerId !== null && transferData.from == null && inputValue !== "" && clubs.length == 0 || transferData.playerId !== null && transferData.from !== null && transferData.to == null && inputValue !== "" && clubs.length == 0   ? (
-                  <CreatePlayerOrClub navigation={navigation} />
+                transferData.playerId == null && inputValue !== "" && players.length == 0 || transferData.playerId !== null && transferData.from == null && inputValue !== "" && clubs.length == 0 || transferData.playerId !== null && transferData.from !== null && transferData.to == null && inputValue !== "" && clubs.length == 0 ? (
+                  <CreatePlayerOrClub setInputValue={setInputValue} setClubs={setClubs} setPlayers={setPlayers} navigation={navigation} />
                 ) : (
                   <FlatList
                     contentContainerStyle={styles.FlatList}

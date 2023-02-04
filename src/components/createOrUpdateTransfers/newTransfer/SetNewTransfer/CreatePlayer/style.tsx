@@ -29,11 +29,16 @@ export const Input = styled.TextInput`
 export const StatusBox = styled.FlatList`
   width: 100%
 `
+export const BoxButton = styled.View`
+  display: flex;
+  justify-content: space-between;
+  flex-direction: row;
+  width: 80%;
+`
 export const styles = StyleSheet.create({
   FlatList: {
     width: '100%',
     justifyContent: 'space-between',
     borderRadius: 5
-    //justifyContent: 'space-between',
   }
 })
