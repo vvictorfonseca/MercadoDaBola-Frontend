@@ -3,3 +3,8 @@ export interface IClub {
   name: string | null;
   photo: any;
 }
+
+export interface IClubCreate {
+  name: string;
+  photo: string
+}
