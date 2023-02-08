@@ -55,9 +55,9 @@ export default function SetNewTransfer({ navigation }: Props) {
     let URL: string = "";
 
     if (transferData.playerId == null) {
-      URL = `https://a348-2804-d41-a777-8f00-c4c6-ef6-f16f-d26.sa.ngrok.io/get/players/${inputValue}`
+      URL = `https://7062-2804-d41-a777-8f00-9563-9ace-d072-cdb6.sa.ngrok.io/get/players/${inputValue}`
     } else if (transferData.from == null || transferData.to == null) {
-      URL = `https://a348-2804-d41-a777-8f00-c4c6-ef6-f16f-d26.sa.ngrok.io/get/clubs/${inputValue}`
+      URL = `https://7062-2804-d41-a777-8f00-9563-9ace-d072-cdb6.sa.ngrok.io/get/clubs/${inputValue}`
     }
 
     const promise = axios.get(URL)

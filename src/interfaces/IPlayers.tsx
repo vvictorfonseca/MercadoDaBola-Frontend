@@ -16,7 +16,7 @@ export interface IPlayerFull {
 export interface IPlayerCreate {
   name: string
   photo: string
-  position: string
+  position: string | undefined
   age: number
   nationality: string
 }

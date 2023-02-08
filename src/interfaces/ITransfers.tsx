@@ -1,3 +1,6 @@
+import { IPlayerFull } from "./IPlayers";
+import { IClubCreate } from "./IClubs";
+
 export interface INewTransfer {
   playerId: null | number;
   from: null | number;
@@ -7,4 +10,13 @@ export interface INewTransfer {
 
 export interface IStatusData {
   name: string
+}
+
+export interface Transfers {
+  id: string;
+  status: string;
+  transferDate: string;
+  player: IPlayerFull;
+  fromRelation: IClubCreate;
+  toRelation: IClubCreate;
 }

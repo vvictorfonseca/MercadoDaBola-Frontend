@@ -60,7 +60,7 @@ export default function ConfirmTransfer({ navigation }: Props) {
 
   function getPlayer() {
     setLoading(true)
-    const URL = `https://a348-2804-d41-a777-8f00-c4c6-ef6-f16f-d26.sa.ngrok.io/get/player/${transferData.playerId}`
+    const URL = `https://7062-2804-d41-a777-8f00-9563-9ace-d072-cdb6.sa.ngrok.io/get/player/${transferData.playerId}`
 
     const promise = axios.get(URL)
     promise.then(response => {
@@ -74,7 +74,7 @@ export default function ConfirmTransfer({ navigation }: Props) {
   }
 
   function getClubFrom() {
-    const URL = `https://a348-2804-d41-a777-8f00-c4c6-ef6-f16f-d26.sa.ngrok.io/get/club/${transferData.from}`
+    const URL = `https://7062-2804-d41-a777-8f00-9563-9ace-d072-cdb6.sa.ngrok.io/get/club/${transferData.from}`
 
     const promise = axios.get(URL)
     promise.then(response => {
@@ -87,7 +87,7 @@ export default function ConfirmTransfer({ navigation }: Props) {
   }
 
   function getClubTo() {
-    const URL = `https://a348-2804-d41-a777-8f00-c4c6-ef6-f16f-d26.sa.ngrok.io/get/club/${transferData.to}`
+    const URL = `https://7062-2804-d41-a777-8f00-9563-9ace-d072-cdb6.sa.ngrok.io/get/club/${transferData.to}`
 
     const promise = axios.get(URL)
     promise.then(response => {
@@ -107,7 +107,7 @@ export default function ConfirmTransfer({ navigation }: Props) {
   }
 
   function createNewTransfer() {
-    const URL = "https://a348-2804-d41-a777-8f00-c4c6-ef6-f16f-d26.sa.ngrok.io/upsert/transfer"
+    const URL = "https://7062-2804-d41-a777-8f00-9563-9ace-d072-cdb6.sa.ngrok.io/upsert/transfer"
 
     const promise = axios.post(URL, newTransferObject)
     promise.then(() => {
