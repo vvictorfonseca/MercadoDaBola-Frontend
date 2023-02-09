@@ -1,25 +1,29 @@
-import { useEffect, useState } from "react";
-import { ListRenderItemInfo, FlatList, Text } from "react-native";
+import { useEffect, useState, useContext } from "react";
+import { ListRenderItemInfo, FlatList } from "react-native";
 import axios from "axios";
 
 import { Transfers } from "../../../interfaces/ITransfers";
 
 import TransferBox from "../TransferBox";
 
+import NgrokUrlContext, {INgrokContext} from "../../../contexts/ngrokUrlContext";
+import UpdateTransfersContext, { IUpdateTransfers } from "../../../contexts/updateTransfersContext";
+
 export default function ConfirmedTranfers() {
+  const { url } = useContext<INgrokContext>(NgrokUrlContext)
+  const { update } = useContext<IUpdateTransfers>(UpdateTransfersContext)
   const [confirmedTransfers, setConfirmedTranfers] = useState<Transfers[]>()
 
   useEffect(() => {
     getConfirmedTransfer()
-  }, [])
+  }, [update])
 
   function getConfirmedTransfer() {
-    const URL = "https://7062-2804-d41-a777-8f00-9563-9ace-d072-cdb6.sa.ngrok.io/get/transfers/Fechado"
+    const URL = `${url}/get/transfers/Fechado`
 
     const promise = axios.get(URL)
     promise.then(response => {
       const { data } = response
-      console.log(data)
       setConfirmedTranfers(data)
     })
       .catch(err => {

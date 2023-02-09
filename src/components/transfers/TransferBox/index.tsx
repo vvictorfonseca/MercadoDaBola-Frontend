@@ -1,15 +1,15 @@
+import { useEffect, useState, useContext } from "react";
 import { View } from "react-native"
 import { Box, Player, PlayerImage, PlayerNameBox, PlayerInfo, PlayerInfoBox, Infos, StatusInfo, TransferStatus, LikesBox, LikesPorcentage, Clubs, ClubBox, ClubImage, ClubName } from "../../createOrUpdateTransfers/newTransfer/ConfirmTransfer/style"
 import axios from "axios";
-
-import { Stack, Alert, IconButton, HStack, VStack, CloseIcon, Text, Center, NativeBaseProvider } from "native-base";
 
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
 import { Ionicons } from "@expo/vector-icons";
 
 import { Transfers } from "../../../interfaces/ITransfers";
-import { useEffect, useState } from "react";
+
+import NgrokUrlContext, { INgrokContext } from "../../../contexts/ngrokUrlContext";
 
 interface ILikes {
   likesResult: number;
@@ -17,6 +17,7 @@ interface ILikes {
 }
 
 export default function TransferBox(props: Transfers) {
+  const { url } = useContext<INgrokContext>(NgrokUrlContext)
   const [liked, setLiked] = useState<boolean>(false)
   const [transferLikes, setTransferLikes] = useState<ILikes>()
 
@@ -34,7 +35,7 @@ export default function TransferBox(props: Transfers) {
   }, [liked])
 
   function getTransferLikes() {
-    const URL = `https://7062-2804-d41-a777-8f00-9563-9ace-d072-cdb6.sa.ngrok.io/getLikes/${props.id}`
+    const URL = `${url}/getLikes/${props.id}`
     const promise = axios.get(URL)
     promise.then(response => {
       const { data } = response
@@ -49,7 +50,7 @@ export default function TransferBox(props: Transfers) {
     let transferId = await AsyncStorage.getItem(`${props.id}`)
 
     if (transferId == null) {
-      const URL = `https://7062-2804-d41-a777-8f00-9563-9ace-d072-cdb6.sa.ngrok.io/postLike`
+      const URL = `${url}/postLike`
       const promise = axios.post(URL, { transferId: props.id, liked: true })
       promise.then(() => {
         AsyncStorage.setItem(`${props.id}`, "true")
@@ -67,7 +68,7 @@ export default function TransferBox(props: Transfers) {
     let transferId = await AsyncStorage.getItem(`${props.id}`)
 
     if (transferId == null) {
-      const URL = `https://7062-2804-d41-a777-8f00-9563-9ace-d072-cdb6.sa.ngrok.io/postLike`
+      const URL = `${url}/postLike`
       const promise = axios.post(URL, { transferId: props.id, liked: false })
       promise.then(() => {
         AsyncStorage.setItem(`${props.id}`, "true")

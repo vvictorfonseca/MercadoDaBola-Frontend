@@ -2,6 +2,8 @@ import { useState, useContext, useEffect } from "react"
 import { View } from "react-native"
 import axios from "axios"
 
+import { Spinner } from "native-base"
+
 import { Box, Player, Infos, StatusInfo, TransferStatus, LikesBox, LikesPorcentage, Clubs, ClubBox, ClubImage, ClubName, Button, TextButton, PlayerImage, PlayerNameBox, PlayerInfo, PlayerInfoBox } from "./style"
 
 import { IPlayerFull } from "../../../../interfaces/IPlayers"
@@ -16,7 +18,8 @@ import { initalPlayerValue, initalClubValue } from "../../../../initalValues"
 import { Ionicons } from "@expo/vector-icons"
 
 import NewTransferContext, { INewTransferContext } from "../../../../contexts/newTransferContext"
-import { Spinner } from "native-base"
+import NgrokUrlContext, { INgrokContext } from "../../../../contexts/ngrokUrlContext"
+import UpdateTransfersContext, { IUpdateTransfers } from "../../../../contexts/updateTransfersContext"
 
 type CreateScreenNavigationProp = StackNavigationProp<RootStackParamList, 'NewTransfer'>;
 
@@ -29,6 +32,9 @@ export default function ConfirmTransfer({ navigation }: Props) {
   const [player, setPlayer] = useState<IPlayerFull>(initalPlayerValue)
   const [clubFrom, setClubFrom] = useState<IClub>(initalClubValue)
   const [clubTo, setClubTo] = useState<IClub>(initalClubValue)
+
+  const { url } = useContext<INgrokContext>(NgrokUrlContext)
+  const { update, setUpdate} = useContext<IUpdateTransfers>(UpdateTransfersContext)
 
   const [loading, setLoading] = useState<boolean>(false)
 
@@ -60,7 +66,7 @@ export default function ConfirmTransfer({ navigation }: Props) {
 
   function getPlayer() {
     setLoading(true)
-    const URL = `https://7062-2804-d41-a777-8f00-9563-9ace-d072-cdb6.sa.ngrok.io/get/player/${transferData.playerId}`
+    const URL = `${url}/get/player/${transferData.playerId}`
 
     const promise = axios.get(URL)
     promise.then(response => {
@@ -74,7 +80,7 @@ export default function ConfirmTransfer({ navigation }: Props) {
   }
 
   function getClubFrom() {
-    const URL = `https://7062-2804-d41-a777-8f00-9563-9ace-d072-cdb6.sa.ngrok.io/get/club/${transferData.from}`
+    const URL = `${url}/get/club/${transferData.from}`
 
     const promise = axios.get(URL)
     promise.then(response => {
@@ -87,7 +93,7 @@ export default function ConfirmTransfer({ navigation }: Props) {
   }
 
   function getClubTo() {
-    const URL = `https://7062-2804-d41-a777-8f00-9563-9ace-d072-cdb6.sa.ngrok.io/get/club/${transferData.to}`
+    const URL = `${url}/get/club/${transferData.to}`
 
     const promise = axios.get(URL)
     promise.then(response => {
@@ -107,12 +113,13 @@ export default function ConfirmTransfer({ navigation }: Props) {
   }
 
   function createNewTransfer() {
-    const URL = "https://7062-2804-d41-a777-8f00-9563-9ace-d072-cdb6.sa.ngrok.io/upsert/transfer"
+    const URL = `${url}/upsert/transfer`
 
     const promise = axios.post(URL, newTransferObject)
     promise.then(() => {
       console.log("Criou")
       setTransferData({ playerId: null, from: null, to: null, status: null })
+      update ? setUpdate(false) : setUpdate(true)
       navigation.navigate('CreateHome')
     })
       .catch(err => {

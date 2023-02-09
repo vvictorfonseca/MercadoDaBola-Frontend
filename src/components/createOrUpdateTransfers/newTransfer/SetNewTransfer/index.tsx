@@ -21,6 +21,7 @@ import LoadingBox from './LoadingBox'
 import NewTransferContext, { INewTransferContext } from '../../../../contexts/newTransferContext'
 import PlayersContext, { IPlayerContext } from '../../../../contexts/playersContext'
 import ClubsContext, { IClubsContext } from '../../../../contexts/clubsContext'
+import NgrokUrlContext, { INgrokContext } from '../../../../contexts/ngrokUrlContext'
 
 type CreateScreenNavigationProp = StackNavigationProp<RootStackParamList, 'NewTransfer'>;
 
@@ -33,6 +34,7 @@ export default function SetNewTransfer({ navigation }: Props) {
   const { transferData } = useContext<INewTransferContext>(NewTransferContext)
   const { players, setPlayers } = useContext<IPlayerContext>(PlayersContext)
   const { clubs, setClubs } = useContext<IClubsContext>(ClubsContext)
+  const { url } = useContext<INgrokContext>(NgrokUrlContext)
 
   const [loading, setLoading] = useState<boolean>(false)
 
@@ -55,9 +57,9 @@ export default function SetNewTransfer({ navigation }: Props) {
     let URL: string = "";
 
     if (transferData.playerId == null) {
-      URL = `https://7062-2804-d41-a777-8f00-9563-9ace-d072-cdb6.sa.ngrok.io/get/players/${inputValue}`
+      URL = `${url}/get/players/${inputValue}`
     } else if (transferData.from == null || transferData.to == null) {
-      URL = `https://7062-2804-d41-a777-8f00-9563-9ace-d072-cdb6.sa.ngrok.io/get/clubs/${inputValue}`
+      URL = `${url}/get/clubs/${inputValue}`
     }
 
     const promise = axios.get(URL)

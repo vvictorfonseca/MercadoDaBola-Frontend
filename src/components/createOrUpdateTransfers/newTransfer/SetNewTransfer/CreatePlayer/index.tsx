@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useContext, useEffect, useState } from 'react'
 import { Pressable, Keyboard, ListRenderItemInfo, FlatList } from 'react-native'
 import axios from 'axios'
 
@@ -12,6 +12,8 @@ import PositionBox from './positionBox'
 import { StackNavigationProp } from '@react-navigation/stack'
 import { RootStackParamList } from '../../../../../navigations/mainNavigation'
 
+import NgrokUrlContext, { INgrokContext } from '../../../../../contexts/ngrokUrlContext'
+
 type CreateScreenNavigationProp = StackNavigationProp<RootStackParamList, 'CreatePlayer'>;
 
 type Props = {
@@ -24,6 +26,8 @@ export default function CreatePlayer({ navigation }: Props) {
   const [playerNationality, setPlayerNationality] = useState<string>("")
   const [playerPosition, setPlayerPosition] = useState<string | undefined>("")
   const [playerPhoto, setPlayerPhoto] = useState<string>("")
+
+  const { url } = useContext<INgrokContext>(NgrokUrlContext)
 
   const [selected, setSelected] = useState<number>(0)
 
@@ -52,7 +56,9 @@ export default function CreatePlayer({ navigation }: Props) {
   }
 
   function createPlayer() {
-    const URL = "https://a348-2804-d41-a777-8f00-c4c6-ef6-f16f-d26.sa.ngrok.io/create/player"
+    const URL = `${url}/create/player`
+    console.log(createPlayerObject)
+    
     const promise = axios.post(URL, createPlayerObject)
     promise.then(() => {
       console.log("criou")

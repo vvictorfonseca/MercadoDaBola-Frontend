@@ -37,11 +37,11 @@ export const StatusInfo = styled.View`
 export const LikesBox = styled.View`
   display: flex;
   flex-direction: row;
-  justify-content: center;
   align-items: center;
-  width: 90%;
+  width: 75%;
   height: 40%;
   margin-bottom: 5px;
+  position: relative;
 `
 
 export const LikesPorcentage = styled.Text `

@@ -1,5 +1,4 @@
-import React from 'react'
-import { useState } from 'react'
+import React, { useContext, useState } from 'react'
 import { Pressable, Keyboard } from 'react-native'
 import axios from 'axios'
 
@@ -11,6 +10,8 @@ import { IClubCreate } from '../../../../../interfaces/IClubs'
 import { StackNavigationProp } from '@react-navigation/stack'
 import { RootStackParamList } from '../../../../../navigations/mainNavigation'
 
+import NgrokUrlContext, { INgrokContext } from '../../../../../contexts/ngrokUrlContext'
+
 type CreateScreenNavigationProp = StackNavigationProp<RootStackParamList, 'CreateClub'>;
 
 type Props = {
@@ -18,6 +19,7 @@ type Props = {
 }
 
 export default function CreateClub({ navigation }: Props) {
+  const { url } = useContext<INgrokContext>(NgrokUrlContext)
   const [clubName, setClubName] = useState<string>("")
   const [clubPhoto, setClubPhoto] = useState<string>("")
   
@@ -27,7 +29,8 @@ export default function CreateClub({ navigation }: Props) {
   }
 
   function createClub() {
-    const URL = "https://a348-2804-d41-a777-8f00-c4c6-ef6-f16f-d26.sa.ngrok.io/create/club"
+    const URL = `${url}/create/club`
+    
     const promise = axios.post(URL, createNewClubObject)
     promise.then(() => {
       console.log("Criou")
