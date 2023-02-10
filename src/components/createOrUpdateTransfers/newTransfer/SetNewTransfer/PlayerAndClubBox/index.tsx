@@ -10,6 +10,7 @@ import { IClub } from '../../../../../interfaces/IClubs'
 
 import NewTransferContext, { INewTransferContext } from '../../../../../contexts/newTransferContext'
 import ClubsContext, { IClubsContext } from '../../../../../contexts/clubsContext'
+import PlayerIdContext, { IPlayerId } from '../../../../../contexts/playerIdContext'
 
 interface IProps {
   info: IPlayer,
@@ -21,6 +22,7 @@ interface IProps {
 export default function PlayerAndClubBox(props: IProps) {
   const { clubs } = useContext<IClubsContext>(ClubsContext)
   const { players } = useContext<IPlayerContext>(PlayersContext)
+  const { setPlayerId } = useContext<IPlayerId>(PlayerIdContext)
   const { transferData, setTransferData } = useContext<INewTransferContext>(NewTransferContext)
 
   let lastPlayerId: number | null = null;
@@ -35,6 +37,7 @@ export default function PlayerAndClubBox(props: IProps) {
 
   return (
     <Box onPress={() => {
+      props.info.id !== null ? setPlayerId(props.info.id) : null
       props.inputValue("")
       props.setPlayers([])
       props.setClubs([])

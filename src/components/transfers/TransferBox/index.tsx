@@ -29,6 +29,15 @@ export default function TransferBox(props: Transfers) {
   for (let i = 0; i < 3; i++) {
     clubToName += props.toRelation.name[i].toUpperCase()
   }
+  
+  let playerPosition = ""
+  if (props.player.position == "Lateral") {
+    playerPosition = "LD/LE"
+  } else if (props.player.position !== null){
+    for (let i = 0; i < 3; i++) {
+      playerPosition += props.player.position[i].toUpperCase()
+    }
+  }
 
   useEffect(() => {
     getTransferLikes()
@@ -93,7 +102,7 @@ export default function TransferBox(props: Transfers) {
         </PlayerNameBox>
 
         <PlayerInfoBox>
-          <PlayerInfo style={{ fontWeight: 'bold' }}>{props.player.position}</PlayerInfo>
+          <PlayerInfo style={{ fontWeight: 'bold' }}>{playerPosition}</PlayerInfo>
         </PlayerInfoBox>
 
         <PlayerInfoBox style={{ borderBottomWidth: 0 }}>

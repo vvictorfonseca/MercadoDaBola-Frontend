@@ -12,22 +12,25 @@ import { ClubsProvider } from './src/contexts/clubsContext';
 import { NewTransferProvider } from './src/contexts/newTransferContext';
 import { NgrokUrlProvider } from './src/contexts/ngrokUrlContext';
 import { UpdateTransfersProvider } from './src/contexts/updateTransfersContext';
+import { PlayerIdProvider } from './src/contexts/playerIdContext';
 
 export default function App() {
   return (
     <NativeBaseProvider>
       <NavigationContainer>
         <NgrokUrlProvider>
-          <UpdateTransfersProvider>
-            <NewTransferProvider>
-              <PlayersProvider>
-                <ClubsProvider>
-                  <StatusBar backgroundColor={'#007300'} barStyle='light-content' />
-                  <MainNavigator />
-                </ClubsProvider>
-              </PlayersProvider>
-            </NewTransferProvider>
-          </UpdateTransfersProvider>
+          <PlayerIdProvider>
+            <UpdateTransfersProvider>
+              <NewTransferProvider>
+                <PlayersProvider>
+                  <ClubsProvider>
+                    <StatusBar backgroundColor={'#007300'} barStyle='light-content' />
+                    <MainNavigator />
+                  </ClubsProvider>
+                </PlayersProvider>
+              </NewTransferProvider>
+            </UpdateTransfersProvider>
+          </PlayerIdProvider>
         </NgrokUrlProvider>
       </NavigationContainer>
     </NativeBaseProvider>

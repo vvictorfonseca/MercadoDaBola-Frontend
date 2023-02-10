@@ -2,6 +2,7 @@ import styled from "styled-components/native"
 import { StyleSheet } from 'react-native';
 
 export const Box = styled.View`
+  margin: auto auto;
   display: flex;
   justify-content: space-evenly;
   align-items: center;
