@@ -1,6 +1,8 @@
 import { useContext, useEffect, useState } from 'react'
-import { Pressable, Keyboard, ListRenderItemInfo, FlatList } from 'react-native'
+import { Pressable, Keyboard, ListRenderItemInfo, FlatList, View } from 'react-native'
 import axios from 'axios'
+
+import { Spinner } from 'native-base'
 
 import { Box, BoxInput, InputDescription, Input, BoxButton, styles } from './style'
 import { Button, TextButton } from '../../ConfirmTransfer/style'
@@ -30,6 +32,7 @@ export default function CreatePlayer({ navigation }: Props) {
   const { url } = useContext<INgrokContext>(NgrokUrlContext)
 
   const [selected, setSelected] = useState<number>(0)
+  const [loading, setLoading] = useState<boolean>(false)
 
   const positions: IPositionData[] = [
     { id: 1, position: "Goleiro" },
@@ -56,13 +59,13 @@ export default function CreatePlayer({ navigation }: Props) {
   }
 
   function createPlayer() {
+    setLoading(true)
     const URL = `${url}/create/player`
-    console.log(createPlayerObject)
-    
+
     const promise = axios.post(URL, createPlayerObject)
     promise.then(() => {
-      console.log("criou")
       navigation.navigate('NewTransfer')
+      setLoading(false)
     })
       .catch(err => {
         console.log(err)
@@ -75,56 +78,66 @@ export default function CreatePlayer({ navigation }: Props) {
 
   return (
     <Pressable onPress={Keyboard.dismiss} style={{ width: '100%', height: '100%', display: 'flex', alignItems: 'center' }}>
-      <Box
-        style={{ flex: 1 }}
-        contentContainerStyle={{
-          flexGrow: 1,
-          alignItems: 'center',
-          justifyContent: 'space-evenly',
-        }}
-        keyboardDismissMode={'none'}
-      >
-        <BoxInput style={{ marginTop: 7 }}>
-          <InputDescription>Digite o nome do jogador:</InputDescription>
-          <Input value={playerName} onChangeText={setPlayerName} />
-        </BoxInput>
+      {
+        loading ? (
+          <View style={ {display: 'flex', alignItems: 'center', justifyContent: 'center', width: '100%', height: '80%' }}>
+            <Spinner size='lg' color={'#56bc31'} />
+          </View>
+        ) : (
+          <>
+            <Box
+              style={{ flex: 1 }}
+              contentContainerStyle={{
+                flexGrow: 1,
+                alignItems: 'center',
+                justifyContent: 'space-evenly',
+              }}
+              keyboardDismissMode={'none'}
+            >
+              <BoxInput style={{ marginTop: 7 }}>
+                <InputDescription>Digite o nome do jogador:</InputDescription>
+                <Input value={playerName} onChangeText={setPlayerName} />
+              </BoxInput>
 
-        <BoxInput>
-          <InputDescription>Digite a idade do jogador:</InputDescription>
-          <Input keyboardType='numeric' value={playerAge} onChangeText={setPlayerAge} />
-        </BoxInput>
+              <BoxInput>
+                <InputDescription>Digite a idade do jogador:</InputDescription>
+                <Input keyboardType='numeric' value={playerAge} onChangeText={setPlayerAge} />
+              </BoxInput>
 
-        <BoxInput>
-          <InputDescription>Digite a Nacionalidade do jogador:</InputDescription>
-          <Input value={playerNationality} onChangeText={setPlayerNationality} />
-        </BoxInput>
+              <BoxInput>
+                <InputDescription>Digite a Nacionalidade do jogador:</InputDescription>
+                <Input value={playerNationality} onChangeText={setPlayerNationality} />
+              </BoxInput>
 
-        <BoxInput>
-          <InputDescription>Insira a foto do jogador:</InputDescription>
-          <Input value={playerPhoto} onChangeText={setPlayerPhoto} />
-        </BoxInput>
+              <BoxInput>
+                <InputDescription>Insira a foto do jogador:</InputDescription>
+                <Input value={playerPhoto} onChangeText={setPlayerPhoto} />
+              </BoxInput>
 
-        <BoxInput style={{ marginBottom: 10 }}>
-          <InputDescription>Selecione a posição do jogador:</InputDescription>
-          <FlatList
-            contentContainerStyle={styles.FlatList}
-            horizontal={true}
-            data={positions}
-            renderItem={renderPositions}
-            keyExtractor={(item) => `${item.id}`}
-          />
-        </BoxInput>
-      </Box>
+              <BoxInput style={{ marginBottom: 10 }}>
+                <InputDescription>Selecione a posição do jogador:</InputDescription>
+                <FlatList
+                  contentContainerStyle={styles.FlatList}
+                  horizontal={true}
+                  data={positions}
+                  renderItem={renderPositions}
+                  keyExtractor={(item) => `${item.id}`}
+                />
+              </BoxInput>
+            </Box>
 
-      <BoxButton>
-        <Button onPress={() => navigation.navigate('NewTransfer')} style={{ marginTop: 1, width: 100 }}>
-          <TextButton>Voltar</TextButton>
-        </Button>
+            <BoxButton>
+              <Button onPress={() => navigation.navigate('NewTransfer')} style={{ marginTop: 1, width: 100 }}>
+                <TextButton>Voltar</TextButton>
+              </Button>
 
-        <Button onPress={() => createPlayer()} style={{ marginTop: 1, width: 100, alignItems: 'flex-end' }}>
-          <TextButton>Salvar</TextButton>
-        </Button>
-      </BoxButton>
+              <Button onPress={() => createPlayer()} style={{ marginTop: 1, width: 100, alignItems: 'flex-end' }}>
+                <TextButton>Salvar</TextButton>
+              </Button>
+            </BoxButton>
+          </>
+        )
+      }
     </Pressable>
   )
 }

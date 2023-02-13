@@ -1,6 +1,8 @@
 import { useContext, useState } from "react"
-import { ListRenderItemInfo, FlatList, Pressable, Keyboard, Text } from "react-native"
+import { ListRenderItemInfo, FlatList, Pressable, Keyboard } from "react-native"
 import axios from "axios"
+
+import { Spinner } from "native-base"
 
 import { IPlayer } from "../../../interfaces/IPlayers"
 import { IClub } from "../../../interfaces/IClubs"
@@ -16,19 +18,29 @@ import PlayersContext, { IPlayerContext } from "../../../contexts/playersContext
 import NgrokUrlContext, { INgrokContext } from "../../../contexts/ngrokUrlContext"
 import PlayerIdContext, { IPlayerId } from "../../../contexts/playerIdContext"
 
-export default function UpdateTransfer() {
+import Update from "./update"
+
+import { StackNavigationProp } from "@react-navigation/stack"
+import { RootStackParamList } from "../../../navigations/mainNavigation"
+
+type CreateScreenNavigationProp = StackNavigationProp<RootStackParamList, 'UpdateTransfer'>;
+
+type Props = {
+  navigation: CreateScreenNavigationProp
+}
+
+export default function UpdateTransfer({ navigation }: Props) {
   const [inputValue, setInputValue] = useState<string>("")
   const [loading, setLoading] = useState<boolean>(false)
   const { players, setPlayers } = useContext<IPlayerContext>(PlayersContext)
   const { playerId } = useContext<IPlayerId>(PlayerIdContext)
-  console.log(playerId)
   const { url } = useContext<INgrokContext>(NgrokUrlContext)
 
   function getPlayerInitals(inputValue: string) {
     inputValue == "" ? setLoading(false) : setLoading(true)
     inputValue == "" ? setPlayers([]) : null
 
-    let URL = `${url}/get/players/${inputValue}`
+    const URL = `${url}/get/players/${inputValue}`
 
     const promise = axios.get(URL)
     promise.then(response => {
@@ -50,7 +62,7 @@ export default function UpdateTransfer() {
     return <PlayerAndClubBox info={item} inputValue={setInputValue} setClubs={setPlayers} setPlayers={setPlayers} />
   }
 
-  function Render() {
+  function ConditionToRenderPlayers() {
     return (
       loading ? (
         <LoadingBox />
@@ -78,10 +90,10 @@ export default function UpdateTransfer() {
                 <Input placeholder="Nome" maxLength={20} value={inputValue} onChangeText={onChangeFunction} />
               </Box>
 
-              <Render />
+              <ConditionToRenderPlayers />
             </>
           ) : (
-            <Text>Atualiza ae</Text>
+            <Update navigation={navigation} />
           )
         }
       </Pressable>
