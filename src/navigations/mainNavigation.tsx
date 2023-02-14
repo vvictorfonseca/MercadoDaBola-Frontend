@@ -31,7 +31,7 @@ export default function MainNavigator() {
         tabBarStyle: {
           position: 'absolute',
           backgroundColor: '#007300',
-          height: 90,
+          height: 85,
           bottom: 15,
           left: 20,
           right: 20,
@@ -64,8 +64,8 @@ export default function MainNavigator() {
           tabBarLabel: "Create/Update",
           tabBarIcon: ({ focused }) => (
             <View style={{ alignItems: 'center', justifyContent: 'center' }}>
-              <Ionicons name='checkmark-circle' color={"#fff"} style={{ opacity: focused ? 1 : 0.8 }} size={30} />
-              <Text style={{ color: "#fff", fontSize: 12, fontWeight: 'bold', opacity: focused ? 1 : 0.8 }}>Confirmado</Text>
+              <Ionicons name='checkmark-circle' color={"#fff"} style={{ opacity: focused ? 1 : 0.8 }} size={35} />
+              {/* <Text style={{ color: "#fff", fontSize: 12, fontWeight: 'bold', opacity: focused ? 1 : 0.8 }}>Confirmado</Text> */}
             </View>
           )
         }}
@@ -81,8 +81,8 @@ export default function MainNavigator() {
           tabBarLabel: "Create/Update",
           tabBarIcon: ({ focused }) => (
             <View style={{ alignItems: 'center', justifyContent: 'center' }}>
-              <Ionicons name='briefcase-sharp' color={"#fff"} style={{ opacity: focused ? 1 : 0.8 }} size={30} />
-              <Text style={{ color: "#fff", fontSize: 12, fontWeight: 'bold', opacity: focused ? 1 : 0.8 }}>Negociando</Text>
+              <Ionicons name='briefcase-sharp' color={"#fff"} style={{ opacity: focused ? 1 : 0.8 }} size={35} />
+              {/* <Text style={{ color: "#fff", fontSize: 12, fontWeight: 'bold', opacity: focused ? 1 : 0.8 }}>Negociando</Text> */}
             </View>
           )
         }}
@@ -98,8 +98,8 @@ export default function MainNavigator() {
           tabBarLabel: "Create/Update",
           tabBarIcon: ({ focused }) => (
             <View style={{ alignItems: 'center', justifyContent: 'center' }}>
-              <Ionicons name='close-circle' color={"#fff"} style={{ opacity: focused ? 1 : 0.8 }} size={30} />
-              <Text style={{ color: "#fff", fontSize: 12, fontWeight: 'bold', opacity: focused ? 1 : 0.8 }}>Melou</Text>
+              <Ionicons name='close-circle' color={"#fff"} style={{ opacity: focused ? 1 : 0.8 }} size={35} />
+              {/* <Text style={{ color: "#fff", fontSize: 12, fontWeight: 'bold', opacity: focused ? 1 : 0.8 }}>Melou</Text> */}
             </View>
           )
         }}
@@ -115,8 +115,8 @@ export default function MainNavigator() {
           tabBarLabel: "Create/Update",
           tabBarIcon: ({ focused }) => (
             <View style={{ alignItems: 'center', justifyContent: 'center' }}>
-              <Ionicons name="create" color={"#fff"} style={{ opacity: focused ? 1 : 0.8 }} size={30} />
-              <Text style={{ color: "#fff", fontSize: 12, opacity: focused ? 1 : 0.8, fontWeight: 'bold' }}>Create</Text>
+              <Ionicons name="create" color={"#fff"} style={{ opacity: focused ? 1 : 0.8 }} size={35} />
+              {/* <Text style={{ color: "#fff", fontSize: 12, opacity: focused ? 1 : 0.8, fontWeight: 'bold' }}>Admin</Text> */}
             </View>
           )
         }}

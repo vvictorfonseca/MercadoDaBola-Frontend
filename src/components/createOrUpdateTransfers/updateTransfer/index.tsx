@@ -71,6 +71,7 @@ export default function UpdateTransfer({ navigation }: Props) {
       ) :
         <FlatList
           contentContainerStyle={styles.FlatList}
+          style={{width: '80%'}}
           ItemSeparatorComponent={Separator}
           data={players}
           renderItem={renderPlayersOrClubs}
@@ -86,7 +87,7 @@ export default function UpdateTransfer({ navigation }: Props) {
           playerId == 0 ? (
             <>
               <Box style={players.length == 0 && inputValue == "" ? { borderBottomLeftRadius: 15, borderBottomRightRadius: 15 } : null}>
-                <Description>Digite o nome do jogador para atualizar a transferência</Description>
+                <Description>Digite o nome do jogador para atualizar sua transferência</Description>
                 <Input placeholder="Nome" maxLength={20} value={inputValue} onChangeText={onChangeFunction} />
               </Box>
 

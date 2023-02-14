@@ -1,5 +1,5 @@
 import { useContext, useEffect, useState } from "react"
-import { ListRenderItemInfo, FlatList, View } from "react-native"
+import { ListRenderItemInfo, FlatList, View, Text } from "react-native"
 import axios from "axios"
 
 import { Spinner } from "native-base"
@@ -18,6 +18,9 @@ import { Transfers, IUpdateTransfer } from "../../../../interfaces/ITransfers"
 import { transferInitialValue } from "../../../../initalValues"
 
 import BoxStatus from "./boxStatus"
+import UpdateTransferBox from "./updateTransferBox"
+
+import { formatClubName, formatPosition } from "../../../../functionToReuse"
 
 export interface IStatus {
   id: number;
@@ -34,26 +37,27 @@ type Props = {
 }
 
 export default function Update({ navigation }: Props) {
+  const [transfers, setTransfers] = useState<Transfers[]>()
   const [transfer, setTransfer] = useState<Transfers>(transferInitialValue)
   const [loading, setLoading] = useState<boolean>(true)
+  const [selected, setSelected] = useState<number>(0)
+
   const { playerId, setPlayerId } = useContext<IPlayerId>(PlayerIdContext)
   const { url } = useContext<INgrokContext>(NgrokUrlContext)
   const { update, setUpdate } = useContext<IUpdateTransfers>(UpdateTransfersContext)
 
-  const [selected, setSelected] = useState<number>(0)
-  
   useEffect(() => {
-    render()
+    getTransfersByPlayerId()
   }, [])
 
-  function render() {
+  function getTransfersByPlayerId() {
     setLoading(true)
     const URL = `${url}/get/transfer/by/${playerId}`
 
     const promise = axios.get(URL)
     promise.then(response => {
       const { data } = response
-      setTransfer(data)
+      setTransfers(data)
       setLoading(false)
     })
       .catch(err => {
@@ -92,7 +96,11 @@ export default function Update({ navigation }: Props) {
     })
       .catch(err => {
         console.log(err)
-      }) 
+      })
+  }
+
+  function renderTransfers({ item }: ListRenderItemInfo<Transfers>) {
+    return <UpdateTransferBox info={item} setTransfer={setTransfer} setSelected={setSelected} />
   }
 
   function renderStatus({ item }: ListRenderItemInfo<IStatus>) {
@@ -103,6 +111,19 @@ export default function Update({ navigation }: Props) {
     loading ? (
       <View style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', width: '100%', height: '80%' }}>
         <Spinner size='lg' color={'#56bc31'} />
+      </View>
+    ) : transfer.status == "" ? (
+      <View style={{ width: '100%', height: '100%', display: 'flex', alignItems: 'center' }}>
+        <Text style={{ marginTop: 5, fontSize: 20, color: '#007300', fontWeight: 'bold' }}>Selecione a Transferência pra atualizar:</Text>
+        <FlatList
+          data={transfers}
+          renderItem={renderTransfers}
+          contentContainerStyle={{
+            display: 'flex',
+            alignItems: 'center'
+          }}
+          style={{ width: '100%', maxHeight: '80%' }}
+        />
       </View>
     ) : (
       <>
@@ -115,7 +136,7 @@ export default function Update({ navigation }: Props) {
             </PlayerNameBox>
 
             <PlayerInfoBox>
-              <PlayerInfo style={{ fontWeight: 'bold' }}>{transfer?.player.position}</PlayerInfo>
+              <PlayerInfo style={{ fontWeight: 'bold' }}>{transfer.player.position !== null ? formatPosition("", transfer.player.position) : ""}</PlayerInfo>
             </PlayerInfoBox>
 
             <PlayerInfoBox style={{ borderBottomWidth: 0 }}>
@@ -132,13 +153,13 @@ export default function Update({ navigation }: Props) {
                   ) : selected == 2 ? (
                     <Ionicons name='close' color={"#f04c3e"} size={40} />
                   ) : selected == 3 ? (
-                    <Ionicons name='checkmark' color={"#fff"} size={40} />
+                    <Ionicons name='checkmark' color={"#007300"} size={40} />
                   ) : transfer.status == "Negociando" ? (
                     <Ionicons name='briefcase-sharp' color={"#fff"} size={35} />
                   ) : transfer.status == "Melou" ? (
                     <Ionicons name='close' color={"#f04c3e"} size={40} />
                   ) : (
-                    <Ionicons name='checkmark' color={"#fff"} size={40} />
+                    <Ionicons name='checkmark' color={"#007300"} size={40} />
                   )
                 }
                 <TransferStatus>{selected == 1 ? "Negociando" : selected == 2 ? "Melou" : selected == 3 ? "Fechado" : transfer.status}</TransferStatus>
@@ -160,14 +181,14 @@ export default function Update({ navigation }: Props) {
             <Clubs>
               <ClubBox>
                 <ClubImage source={{ uri: transfer?.fromRelation.photo }} />
-                <ClubName>{transfer?.fromRelation.name}</ClubName>
+                <ClubName>{transfer?.fromRelation.name !== null ? formatClubName("", transfer.fromRelation.name) : null}</ClubName>
               </ClubBox>
 
               <Ionicons name='arrow-forward' color={"#fff"} size={40} />
 
               <ClubBox>
                 <ClubImage source={{ uri: transfer?.toRelation.photo }} />
-                <ClubName>{transfer?.toRelation.name}</ClubName>
+                <ClubName>{transfer?.toRelation.name !== null ? formatClubName("", transfer.toRelation.name) : null}</ClubName>
               </ClubBox>
             </Clubs>
           </View>
@@ -193,7 +214,7 @@ export default function Update({ navigation }: Props) {
           </Button>
 
           <Button onPress={() => updateTrnasfer()} style={{ marginTop: 1, width: 150, alignItems: 'flex-end', height: 60 }}>
-            <TextButton>Salvar</TextButton>
+            <TextButton>Atualizar</TextButton>
           </Button>
         </BoxButton>
       </>

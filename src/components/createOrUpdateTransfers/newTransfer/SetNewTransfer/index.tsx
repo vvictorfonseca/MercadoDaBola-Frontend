@@ -31,12 +31,12 @@ type Props = {
 
 export default function SetNewTransfer({ navigation }: Props) {
   const [inputValue, setInputValue] = useState<string>("")
+  const [loading, setLoading] = useState<boolean>(false)
+  
   const { transferData } = useContext<INewTransferContext>(NewTransferContext)
   const { players, setPlayers } = useContext<IPlayerContext>(PlayersContext)
   const { clubs, setClubs } = useContext<IClubsContext>(ClubsContext)
   const { url } = useContext<INgrokContext>(NgrokUrlContext)
-
-  const [loading, setLoading] = useState<boolean>(false)
 
   const status: IStatusData[] = [
     { name: "Negociando" },
@@ -104,6 +104,7 @@ export default function SetNewTransfer({ navigation }: Props) {
                 ) : (
                   <FlatList
                     contentContainerStyle={styles.FlatList}
+                    style={{width: '80%'}}
                     ItemSeparatorComponent={Separator}
                     data={transferData.playerId == null ? players : clubs}
                     renderItem={renderPlayersOrClubs}
@@ -120,6 +121,7 @@ export default function SetNewTransfer({ navigation }: Props) {
             </Box>
             <FlatList
               contentContainerStyle={styles.FlatList}
+              style={{ width: '80%' }}
               ItemSeparatorComponent={Separator}
               data={status}
               renderItem={renderStatus}

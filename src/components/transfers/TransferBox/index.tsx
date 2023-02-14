@@ -11,33 +11,18 @@ import { Transfers } from "../../../interfaces/ITransfers";
 
 import NgrokUrlContext, { INgrokContext } from "../../../contexts/ngrokUrlContext";
 
+import { formatClubName, formatPosition } from "../../../functionToReuse";
+
 interface ILikes {
   likesResult: number;
   dislikesResult: number;
 }
 
 export default function TransferBox(props: Transfers) {
-  const { url } = useContext<INgrokContext>(NgrokUrlContext)
   const [liked, setLiked] = useState<boolean>(false)
   const [transferLikes, setTransferLikes] = useState<ILikes>()
 
-  let clubFromName = ""
-  for (let i = 0; i < 3; i++) {
-    clubFromName += props.fromRelation.name[i].toUpperCase()
-  }
-  let clubToName = ""
-  for (let i = 0; i < 3; i++) {
-    clubToName += props.toRelation.name[i].toUpperCase()
-  }
-  
-  let playerPosition = ""
-  if (props.player.position == "Lateral") {
-    playerPosition = "LD/LE"
-  } else if (props.player.position !== null){
-    for (let i = 0; i < 3; i++) {
-      playerPosition += props.player.position[i].toUpperCase()
-    }
-  }
+  const { url } = useContext<INgrokContext>(NgrokUrlContext)
 
   useEffect(() => {
     getTransferLikes()
@@ -102,7 +87,7 @@ export default function TransferBox(props: Transfers) {
         </PlayerNameBox>
 
         <PlayerInfoBox>
-          <PlayerInfo style={{ fontWeight: 'bold' }}>{playerPosition}</PlayerInfo>
+          <PlayerInfo style={{ fontWeight: 'bold' }}>{props.player.position !== null ? formatPosition("", props.player.position) : ""}</PlayerInfo>
         </PlayerInfoBox>
 
         <PlayerInfoBox style={{ borderBottomWidth: 0 }}>
@@ -119,7 +104,7 @@ export default function TransferBox(props: Transfers) {
               ) : props.status == "Melou" ? (
                 <Ionicons name='close' color={"#f04c3e"} size={40} />
               ) : (
-                <Ionicons name='checkmark' color={"#fff"} size={40} />
+                <Ionicons name='checkmark' color={"#007300"} size={40} />
               )
             }
             <TransferStatus>{props.status}</TransferStatus>
@@ -141,14 +126,14 @@ export default function TransferBox(props: Transfers) {
         <Clubs>
           <ClubBox>
             <ClubImage source={{ uri: props.fromRelation.photo }} />
-            <ClubName>{clubFromName}</ClubName>
+            <ClubName>{props.fromRelation.name !== null ? formatClubName("", props.fromRelation.name) : ""}</ClubName>
           </ClubBox>
 
           <Ionicons name='arrow-forward' color={"#fff"} size={40} />
 
           <ClubBox>
             <ClubImage source={{ uri: props.toRelation.photo }} />
-            <ClubName>{clubToName}</ClubName>
+            <ClubName>{props.toRelation.name !== null ? formatClubName("", props.toRelation.name) : ""}</ClubName>
           </ClubBox>
         </Clubs>
       </View>

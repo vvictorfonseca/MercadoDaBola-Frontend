@@ -51,7 +51,7 @@ export default function PlayerAndClubBox(props: IProps) {
             :
             null
     }}
-      style={props.info.id == lastPlayerId || props.info.id == lastClubId ? { borderBottomLeftRadius: 15, borderBottomRightRadius: 15 } : null}
+      style={props.info.id == lastPlayerId || props.info.id == lastClubId ? { borderBottomLeftRadius: 15, borderBottomRightRadius: 15, width: '100%' } : { width: '100%' }}
     >
       <Image style={Styles.Image} source={{ uri: props.info.photo }} />
       <Name>{props.info.name}</Name>

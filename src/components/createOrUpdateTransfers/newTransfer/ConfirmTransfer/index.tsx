@@ -21,6 +21,8 @@ import NewTransferContext, { INewTransferContext } from "../../../../contexts/ne
 import NgrokUrlContext, { INgrokContext } from "../../../../contexts/ngrokUrlContext"
 import UpdateTransfersContext, { IUpdateTransfers } from "../../../../contexts/updateTransfersContext"
 
+import { formatClubName, formatPosition } from "../../../../functionToReuse"
+
 type CreateScreenNavigationProp = StackNavigationProp<RootStackParamList, 'NewTransfer'>;
 
 type Props = {
@@ -28,35 +30,14 @@ type Props = {
 }
 
 export default function ConfirmTransfer({ navigation }: Props) {
-  const { transferData, setTransferData } = useContext<INewTransferContext>(NewTransferContext)
   const [player, setPlayer] = useState<IPlayerFull>(initalPlayerValue)
   const [clubFrom, setClubFrom] = useState<IClub>(initalClubValue)
   const [clubTo, setClubTo] = useState<IClub>(initalClubValue)
-
-  const { url } = useContext<INgrokContext>(NgrokUrlContext)
-  const { update, setUpdate} = useContext<IUpdateTransfers>(UpdateTransfersContext)
-
   const [loading, setLoading] = useState<boolean>(false)
 
-  let playerPosition = ""
-  let clubFromName = ""
-  let clubToName = ""
-
-  if (player.position) {
-    for (let i = 0; i < 3; i++) {
-      playerPosition += player.position[i].toUpperCase()
-    }
-  }
-  if (clubFrom.name) {
-    for (let i = 0; i < 3; i++) {
-      clubFromName += clubFrom.name[i].toUpperCase()
-    }
-  }
-  if (clubTo.name) {
-    for (let i = 0; i < 3; i++) {
-      clubToName += clubTo.name[i].toUpperCase()
-    }
-  }
+  const { transferData, setTransferData } = useContext<INewTransferContext>(NewTransferContext)
+  const { url } = useContext<INgrokContext>(NgrokUrlContext)
+  const { update, setUpdate} = useContext<IUpdateTransfers>(UpdateTransfersContext)
 
   useEffect(() => {
     getPlayer()
@@ -117,7 +98,6 @@ export default function ConfirmTransfer({ navigation }: Props) {
 
     const promise = axios.post(URL, newTransferObject)
     promise.then(() => {
-      console.log("Criou")
       setTransferData({ playerId: null, from: null, to: null, status: null })
       update ? setUpdate(false) : setUpdate(true)
       navigation.navigate('CreateHome')
@@ -145,7 +125,7 @@ export default function ConfirmTransfer({ navigation }: Props) {
                 </PlayerNameBox>
 
                 <PlayerInfoBox>
-                  <PlayerInfo style={{ fontWeight: 'bold' }}>{playerPosition}</PlayerInfo>
+                  <PlayerInfo style={{ fontWeight: 'bold' }}>{player.position ? formatPosition("", player.position) : ""}</PlayerInfo>
                 </PlayerInfoBox>
 
                 <PlayerInfoBox style={{ borderBottomWidth: 0 }}>
@@ -160,9 +140,9 @@ export default function ConfirmTransfer({ navigation }: Props) {
                       transferData.status == "Negociando" ? (
                         <Ionicons name='briefcase-sharp' color={"#fff"} size={35} />
                       ) : transferData.status == "Melou" ? (
-                        <Ionicons name='close' color={"#f04c3e"} size={35} />
+                        <Ionicons name='close' color={"#f04c3e"} size={40} />
                       ) : (
-                        <Ionicons name='checkmark' color={"#fff"} size={35} />
+                        <Ionicons name='checkmark' color={"#007300"} size={40} />
                       )
                     }
                     <TransferStatus>{transferData.status}</TransferStatus>
@@ -184,21 +164,21 @@ export default function ConfirmTransfer({ navigation }: Props) {
                 <Clubs>
                   <ClubBox>
                     <ClubImage source={{ uri: clubFrom.photo }} />
-                    <ClubName>{clubFromName}</ClubName>
+                    <ClubName>{clubFrom.name ? formatClubName("", clubFrom.name) : ""}</ClubName>
                   </ClubBox>
 
                   <Ionicons name='arrow-forward' color={"#fff"} size={40} />
 
                   <ClubBox>
                     <ClubImage source={{ uri: clubTo.photo }} />
-                    <ClubName>{clubToName}</ClubName>
+                    <ClubName>{clubTo.name ? formatClubName("", clubTo.name) : ""}</ClubName>
                   </ClubBox>
                 </Clubs>
               </View>
             </Box>
 
             <Button onPress={() => createNewTransfer()}>
-              <TextButton>Salvar</TextButton>
+              <TextButton>Criar</TextButton>
             </Button>
 
             <Button style={{ marginTop: 10 }} onPress={() => setTransferData({ playerId: null, from: null, to: null, status: null })}>

@@ -30,7 +30,6 @@ export const Input = styled.TextInput`
 `
 export const styles = StyleSheet.create({
   FlatList: {
-    width: '100%',
     justifyContent: 'space-between',
   }
 })
