@@ -19,6 +19,7 @@ Mercado da Bola é uma aplicação Mobile para acompanhar as transferências de 
 - TypeScript
 - React-Native
 - React-Native-Navigation
+- Native-Base UI
 - Styled-components
 - AsyncStorage
 - Expo
