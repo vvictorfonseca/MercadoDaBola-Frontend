@@ -2,6 +2,8 @@ import { useEffect, useState, useContext } from "react";
 import { ListRenderItemInfo, FlatList, View } from "react-native";
 import axios from "axios";
 
+import AsyncStorage from "@react-native-async-storage/async-storage";
+
 import { Spinner } from "native-base";
 
 import { Transfers } from "../../../interfaces/ITransfers";
@@ -17,7 +19,18 @@ export default function ConfirmedTranfers() {
   const [confirmedTransfers, setConfirmedTranfers] = useState<Transfers[]>()
   const [loading, setLoading] = useState<boolean>(false)
 
+  async function deleteAsyncStorage() {
+    try {
+      await AsyncStorage.removeItem("admIsLogged")
+      return true
+    } 
+    catch(err) {
+      return false
+    }
+  }
+
   useEffect(() => {
+    deleteAsyncStorage()
     getConfirmedTransfer()
   }, [update])
 

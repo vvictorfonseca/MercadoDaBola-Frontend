@@ -118,7 +118,7 @@ export default function ConfirmTransfer({ navigation }: Props) {
           <>
             <Box>
               <Player>
-                <PlayerImage source={{ uri: player?.photo }}></PlayerImage>
+                <PlayerImage source={{ uri: player?.photo !== "" ? player.photo : undefined}}></PlayerImage>
 
                 <PlayerNameBox>
                   <PlayerInfo>{player?.name}</PlayerInfo>
@@ -163,14 +163,14 @@ export default function ConfirmTransfer({ navigation }: Props) {
 
                 <Clubs>
                   <ClubBox>
-                    <ClubImage source={{ uri: clubFrom.photo }} />
+                    <ClubImage source={{ uri: clubFrom.photo !== "" ? clubFrom.photo : undefined }} />
                     <ClubName>{clubFrom.name ? formatClubName("", clubFrom.name) : ""}</ClubName>
                   </ClubBox>
 
                   <Ionicons name='arrow-forward' color={"#fff"} size={40} />
 
                   <ClubBox>
-                    <ClubImage source={{ uri: clubTo.photo }} />
+                    <ClubImage source={{ uri: clubTo.photo !== "" ? clubTo.photo : undefined }} />
                     <ClubName>{clubTo.name ? formatClubName("", clubTo.name) : ""}</ClubName>
                   </ClubBox>
                 </Clubs>

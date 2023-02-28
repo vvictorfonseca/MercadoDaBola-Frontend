@@ -2,17 +2,14 @@ import { useContext, useState } from "react"
 import { ListRenderItemInfo, FlatList, Pressable, Keyboard } from "react-native"
 import axios from "axios"
 
-import { Spinner } from "native-base"
-
 import { IPlayer } from "../../../interfaces/IPlayers"
-import { IClub } from "../../../interfaces/IClubs"
 
 import { Box, Description, Input, styles } from "../newTransfer/style"
 
-import PlayerAndClubBox from "../newTransfer/SetNewTransfer/PlayerAndClubBox"
 import LoadingBox from "../newTransfer/SetNewTransfer/LoadingBox"
 import NoPlayerBox from "./noPlayerBox"
 import Separator from "../../separator"
+import UpdatePlayerBox from "./updatePlayerBox"
 
 import PlayersContext, { IPlayerContext } from "../../../contexts/playersContext"
 import NgrokUrlContext, { INgrokContext } from "../../../contexts/ngrokUrlContext"
@@ -34,7 +31,7 @@ export default function UpdateTransfer({ navigation }: Props) {
   const [loading, setLoading] = useState<boolean>(false)
   const { players, setPlayers } = useContext<IPlayerContext>(PlayersContext)
   const { playerId } = useContext<IPlayerId>(PlayerIdContext)
-  const { url } = useContext<INgrokContext>(NgrokUrlContext)
+  const { url } = useContext<INgrokContext>(NgrokUrlContext)  
 
   function getPlayerInitals(inputValue: string) {
     inputValue == "" ? setLoading(false) : setLoading(true)
@@ -58,8 +55,8 @@ export default function UpdateTransfer({ navigation }: Props) {
     getPlayerInitals(inputValue)
   }
 
-  function renderPlayersOrClubs({ item }: ListRenderItemInfo<IPlayer | IClub>) {
-    return <PlayerAndClubBox info={item} inputValue={setInputValue} setClubs={setPlayers} setPlayers={setPlayers} />
+  function renderPlayersOrClubs({ item }: ListRenderItemInfo<IPlayer>) {
+    return <UpdatePlayerBox info={item} inputValue={setInputValue} setPlayers={setPlayers} />
   }
 
   function ConditionToRenderPlayers() {

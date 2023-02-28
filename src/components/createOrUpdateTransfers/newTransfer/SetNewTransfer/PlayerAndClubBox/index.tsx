@@ -37,7 +37,6 @@ export default function PlayerAndClubBox(props: IProps) {
 
   return (
     <Box onPress={() => {
-      props.info.id !== null ? setPlayerId(props.info.id) : null
       props.inputValue("")
       props.setPlayers([])
       props.setClubs([])

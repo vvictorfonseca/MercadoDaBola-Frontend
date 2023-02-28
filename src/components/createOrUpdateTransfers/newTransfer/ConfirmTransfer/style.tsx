@@ -5,8 +5,8 @@ export const Box = styled.View`
   flex-direction: row;
   align-items: center;
   width: 90%;
-  height: 200;
-  background-color: #56bc31;
+  height: 200px;
+  background-color: #9fb398;
   border: #a6ada6 1px;
   margin-top: 65px;
   border-radius: 15px;
@@ -94,7 +94,7 @@ export const ClubName = styled.Text`
 export const Button = styled.TouchableOpacity`
   margin-top: 35px;
   width: 50%;
-  height: 45;
+  height: 45px;
   background-color: #56bc31;
   border: #a6ada6 1px;
   border-radius: 15px;

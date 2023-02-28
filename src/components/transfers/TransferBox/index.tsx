@@ -42,6 +42,7 @@ export default function TransferBox(props: Transfers) {
 
   async function likePost() {
     let transferId = await AsyncStorage.getItem(`${props.id}`)
+    console.log(transferId)
 
     if (transferId == null) {
       const URL = `${url}/postLike`

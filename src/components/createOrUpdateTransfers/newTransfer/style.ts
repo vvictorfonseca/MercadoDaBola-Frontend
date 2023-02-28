@@ -18,6 +18,7 @@ export const Description = styled.Text`
   font-weight: 500;
   text-align: center;
   margin: 15px 0;
+  padding: 5px;
 `
 export const Input = styled.TextInput`
   width: 95%;

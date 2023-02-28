@@ -1,10 +1,13 @@
+import { useContext } from 'react';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import { View, Text } from 'react-native';
+import { View } from 'react-native';
 
 import ConfirmedTranfers from '../components/transfers/ConfirmedTransfers';
 import DealingTransfers from '../components/transfers/DealingTranfers';
 import CanceledTranfers from '../components/transfers/CanceledTransfers';
 import CreateOrUpdateNavigator from './createNavigation';
+
+import AdminContext, { IAdminContext } from '../contexts/adminContext';
 
 import { Ionicons } from "@expo/vector-icons/"
 
@@ -25,6 +28,16 @@ export type RootStackParamList = {
 const Tab = createBottomTabNavigator<RootStackParamList>()
 
 export default function MainNavigator() {
+  const { admIsLogged } = useContext<IAdminContext>(AdminContext)
+
+  function titleName() {
+    if (admIsLogged) {
+      return "Criar ou atualizadar transferências"
+    } else {
+      return "Logar como Admin"
+    }
+  }
+
   return (
     <Tab.Navigator
       screenOptions={{
@@ -65,7 +78,6 @@ export default function MainNavigator() {
           tabBarIcon: ({ focused }) => (
             <View style={{ alignItems: 'center', justifyContent: 'center' }}>
               <Ionicons name='checkmark-circle' color={"#fff"} style={{ opacity: focused ? 1 : 0.8 }} size={35} />
-              {/* <Text style={{ color: "#fff", fontSize: 12, fontWeight: 'bold', opacity: focused ? 1 : 0.8 }}>Confirmado</Text> */}
             </View>
           )
         }}
@@ -82,7 +94,6 @@ export default function MainNavigator() {
           tabBarIcon: ({ focused }) => (
             <View style={{ alignItems: 'center', justifyContent: 'center' }}>
               <Ionicons name='briefcase-sharp' color={"#fff"} style={{ opacity: focused ? 1 : 0.8 }} size={35} />
-              {/* <Text style={{ color: "#fff", fontSize: 12, fontWeight: 'bold', opacity: focused ? 1 : 0.8 }}>Negociando</Text> */}
             </View>
           )
         }}
@@ -99,7 +110,6 @@ export default function MainNavigator() {
           tabBarIcon: ({ focused }) => (
             <View style={{ alignItems: 'center', justifyContent: 'center' }}>
               <Ionicons name='close-circle' color={"#fff"} style={{ opacity: focused ? 1 : 0.8 }} size={35} />
-              {/* <Text style={{ color: "#fff", fontSize: 12, fontWeight: 'bold', opacity: focused ? 1 : 0.8 }}>Melou</Text> */}
             </View>
           )
         }}
@@ -110,13 +120,12 @@ export default function MainNavigator() {
         component={CreateOrUpdateNavigator}
         options={{
           title: "Create",
-          headerTitle: "Criar ou atualizar transferência",
+          headerTitle: titleName(),
           headerShadowVisible: false,
           tabBarLabel: "Create/Update",
           tabBarIcon: ({ focused }) => (
             <View style={{ alignItems: 'center', justifyContent: 'center' }}>
               <Ionicons name="create" color={"#fff"} style={{ opacity: focused ? 1 : 0.8 }} size={35} />
-              {/* <Text style={{ color: "#fff", fontSize: 12, opacity: focused ? 1 : 0.8, fontWeight: 'bold' }}>Admin</Text> */}
             </View>
           )
         }}
